@@ -87,7 +87,7 @@ Player.prototype.update = function () {
 		document.getElementById('score').innerHTML = score;
 		this.reset();
 	}
-	if (score === 100) {
+	if (score >= 100) {
 		alert("YOU WIN!!!");
 		location.reload();
 	}
