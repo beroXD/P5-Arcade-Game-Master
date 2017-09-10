@@ -94,7 +94,9 @@ var Engine = (function (global) {
 		allEnemies.forEach(function (enemy) {
 			enemy.update(dt);
 		});
-		Player.update();
+		player.update();
+		heart.update();
+		star.update();
 	}
 
 	/* This function initially draws the "game level", it will then call
@@ -151,7 +153,9 @@ var Engine = (function (global) {
 			enemy.render();
 		});
 
-		Player.render();
+		player.render();
+		heart.render();
+		star.render();
 	}
 
 	/* This function does nothing but it could have been a good place to
@@ -172,7 +176,9 @@ var Engine = (function (global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-		'images/char-princess-girl.png'
+		'images/char-princess-girl.png',
+		'images/Heart.png',
+		'images/Star.png'
     ]);
 	Resources.onReady(init);
 

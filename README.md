@@ -11,8 +11,12 @@ Here is a helpful tutorial that helped me with this project.
 * Extract the files.
 * Open the index file in browser to play.
 
+OR
+* Play it [here](https://beroxd.github.io./)
+
 ## How To Play
 
 * Use the arrow keys to move UP, DOWN, LEFT and RIGHT.
-* When you reach the water 10 times then the game is won!!
-* If you collide with the enemies (bugs) 3 times the game is over!
+* Collect hearts to gain extra lives.
+* Collect stars and add 5 points to your score.
+* When you score 100 points then the game is won!!

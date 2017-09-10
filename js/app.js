@@ -1,3 +1,14 @@
+// This is a frogger clone game,
+// part of udacity front-end nanodegree projects.
+// Abeer AlAbdulaali
+// 10.09.2017
+
+// Background Music
+var audio = new Audio('music/game.wav');
+audio.volume = 0.1;
+audio.loop = true;
+audio.play();
+
 //inital player life and score
 var score = 0;
 var lives = 3;
@@ -35,11 +46,15 @@ Enemy.prototype.update = function (dt) {
 	}
 
 	//check collision between player and enemy, if true game resets
-	if (this.x < Player.x + 37 && this.x + 60 > Player.x && this.y < Player.y + 60 && this.y + 40 > Player.y) {
-		lives--;
-		document.getElementById('life').innerHTML = lives;
-		Player.reset();
+	if (this.x < player.x + 37 && this.x + 60 > player.x && this.y < player.y + 60 && this.y + 40 > player.y) {
+		this.checkCollision();
 	}
+};
+
+Enemy.prototype.checkCollision = function () {
+	lives--;
+	document.getElementById('life').innerHTML = lives;
+	player.reset();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -72,7 +87,7 @@ Player.prototype.update = function () {
 		document.getElementById('score').innerHTML = score;
 		this.reset();
 	}
-	if (score === 10) {
+	if (score === 100) {
 		alert("YOU WIN!!!");
 		location.reload();
 	}
@@ -101,7 +116,7 @@ Player.prototype.handleInput = function (arrow) {
 			break;
 		case 'up': //if player reaches the water then call update function
 			if (this.y < 0) {
-				Player.update();
+				this.update();
 			} else {
 				this.y -= 90;
 			}
@@ -116,8 +131,70 @@ Player.prototype.handleInput = function (arrow) {
 
 //reset player to initial x and y position
 Player.prototype.reset = function () {
-	Player.x = 200;
-	Player.y = 400;
+	this.x = 200;
+	this.y = 400;
+};
+
+//***********HEART CLASS*****************
+var Heart = function (x, y) {
+	this.sprite = 'images/Heart.png';
+	this.x = x;
+	this.y = y;
+};
+
+//check if player picked up heart or not
+Heart.prototype.update = function () {
+	if (this.x < player.x + 37 && this.x + 60 > player.x && this.y < player.y + 60 && this.y + 40 > player.y) {
+		this.picked();
+	}
+};
+
+//picking up hearts will add extra lives to the player life
+Heart.prototype.picked = function () {
+	lives++;
+	document.getElementById('life').innerHTML = lives;
+	this.reset();
+};
+
+//resetting the heart in a different place on the canvas
+Heart.prototype.reset = function () {
+	this.x = (102 * Math.floor(Math.random() * 4) + 0);
+	this.y = (50 + (85 * Math.floor(Math.random() * 3)));
+};
+
+Heart.prototype.render = function () {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+//***********STAR CLASS*****************
+var Star = function (x, y) {
+	this.sprite = 'images/Star.png';
+	this.x = x;
+	this.y = y;
+	this.delay = undefined;
+};
+
+//check if player picked up star
+Star.prototype.update = function () {
+	if (this.x < player.x + 37 && this.x + 60 > player.x && this.y < player.y + 60 && this.y + 40 > player.y) {
+		this.picked();
+	}
+};
+
+//adding 5 points to score
+Star.prototype.picked = function () {
+	score += 5;
+	document.getElementById('score').innerHTML = score;
+	this.reset();
+};
+
+Star.prototype.reset = function () {
+	this.x = (102 * Math.floor(Math.random() * 4) + 0);
+	this.y = (50 + (85 * Math.floor(Math.random() * 3)));
+};
+
+Star.prototype.render = function () {
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now instantiate your objects.
@@ -132,7 +209,9 @@ allEnemies.push(new Enemy(0, 140));
 allEnemies.push(new Enemy(0, 60));
 allEnemies.push(new Enemy(0, 60, 250));
 
-var Player = new Player();
+var player = new Player();
+var heart = new Heart(200, 160);
+var star = new Star(403, 155);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -144,5 +223,5 @@ document.addEventListener('keyup', function (e) {
 		40: 'down'
 	};
 
-	Player.handleInput(allowedKeys[e.keyCode]);
+	player.handleInput(allowedKeys[e.keyCode]);
 });
