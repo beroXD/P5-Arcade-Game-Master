@@ -1,0 +1,16 @@
+body {
+	text-align: right;
+	display: flex;
+}
+
+p {
+	padding-left: 10px;
+	font-family: 'VT323', monospace;
+	font-size: 5.2em;
+	font-weight: 700;
+	text-align: center;
+}
+
+img {
+	width: 35%;
+}
